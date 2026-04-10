@@ -23,13 +23,14 @@ def regex_file_name_test(uploaded_file, allowed_extensions: list = [], regex: st
 
     '''
 
-    regex_extensions = "|".join(allowed_extensions)
+    regex_extensions = "|".join(ext.lstrip('.') for ext in allowed_extensions)
     if regex:
         regex = regex+"\.(?:"+regex_extensions+")$"
     else:
-        regex = "^(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\_\ ]{0,50})?(?:[a-zA-Z0-9])?\.(?:"+regex_extensions+")$"
-    uploded_file_name = uploaded_file.name
-    file_name_validation = re.search(regex, uploded_file_name)
+        # regex = "^(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\_\ ]{0,50})?(?:[a-zA-Z0-9])?\.(?:"+regex_extensions+")$"
+        regex = "^[a-zA-Z0-9][a-zA-Z0-9\-\_\ ]{0,49}\.(?:"+regex_extensions+")$"
+    uploaded_file_name = uploaded_file.name
+    file_name_validation = re.search(regex, uploaded_file_name)
     if not file_name_validation:
         raise Exception('Uploaded file has a prohibited name.')
     
@@ -68,7 +69,7 @@ def file_type_test(uploaded_file, allowed_types: list = [], allowed_mimes: list 
 
     uploaded_file_path = uploaded_file.temporary_file_path()
     uploaded_mime = uploaded_file.content_type
-    uploaded_extension = uploaded_file.file.name.split('.')[-1]
+    uploaded_extension = uploaded_file.name.split('.')[-1]
     with open(uploaded_file_path , "rb") as file:
         validation = fleep.get(file.read(128))
         info_type = validation['info'].type
