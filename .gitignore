@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+
+.venv/
+
+not-zip-safe
+dependency_links.txt 
+PKG-INFO 
+requires.txt 
+SOURCES.txt 
+top_level.txt
