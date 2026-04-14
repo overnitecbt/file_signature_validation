@@ -77,29 +77,35 @@ def file_type_test(uploaded_file, allowed_types: list = [], allowed_mimes: list 
         info_mime = validation['info'].mime
         info_all = validation['data']
 
+    matched_type = None
+    matched_mime = None
+    matched_extension = None
+    matched_size = None
+
     for t in allowed_types:
         if t in info_type:
-            type = t
+            matched_type = t
             break
     for m in allowed_mimes:
         if m in info_mime:
-            mime = m
+            matched_mime = m
             break
     for e in allowed_extensions:
-        if e in info_extension:
-            extension = e
+        e_no_period = re.sub(r"\.", "", e)
+        if e in info_extension or e_no_period in info_extension:
+            matched_extension = e
             break
 
     if uploaded_file.size <= allowed_size:
-        size = uploaded_file.size
+        matched_size = uploaded_file.size
 
-    if not type:
+    if not matched_type:
         raise Exception('File type not supported.')
-    if not mime:
+    if not matched_mime:
         raise Exception('File mime not supported.')
-    if not extension:
+    if not matched_extension:
         raise Exception('File extension not supported.')
-    if not size:
+    if not matched_size:
         raise Exception('File size not supported.')
 
     # if acceptable file has all the matching features (type, extension, mime)
