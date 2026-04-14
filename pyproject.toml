@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name="file_signature_validation"
-version="0.9.0"
-description = "File validation based on file signature."
+version="0.1.0"
+description = "Django uploaded file validation based on file signature."
 classifiers = ["License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3"]
 keywords = ["file", "validation"]
 license = { file = "LICENSE" }
